@@ -11,7 +11,7 @@ const TodoItem = (props) => {
             ) : (
                 <>
                     {props.todo.text}
-                    <Badge pill bg="success" className="float-end">&#10003;</Badge>
+                    <Badge pill bg="success" className="float-end" onClick={() => {props.markAsDone(props.todo.id)}}>&#10003;</Badge>
                 </>
             )}
         </ListGroup.Item>

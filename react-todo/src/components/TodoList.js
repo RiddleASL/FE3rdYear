@@ -14,9 +14,20 @@ const TodoList = () =>{
 
     const [list, setList] = useState(initList)
     const [textInput, setTextInput] = useState("")
+    
+    const markAsDone = (id) => {
+        const newList = list.map(item => {
+            if(item.id === id){
+                item.done = true;
+            }
+
+            return item;
+        })
+        setList(newList)
+    }
 
     let todoItems = list.map((item, i) => {
-        return <TodoItem key={i} todo={item}/>
+        return <TodoItem key={i} markAsDone={markAsDone} todo={item}/>
     })
     
     const handleTextInput = e => {
@@ -24,14 +35,16 @@ const TodoList = () =>{
     }
 
     const addTodoItem = e => {
-        let newTodo = {
-            id: list[list.lenght -1].id + 1,
-            text: textInput,
-            done: false
-        }
+        if(textInput != ""){
+            let newTodo = {
+                id: list[list.length-1].id + 1,
+                text: textInput,
+                done: false
+            }
 
-        setList((prevList) => [...prevList, newTodo]);
-        setTextInput("")
+            setList((prevList) => [...prevList, newTodo]);
+            setTextInput("")
+        }
     }
 
     return(
@@ -43,8 +56,8 @@ const TodoList = () =>{
                 </ListGroup>
             </Card.Body>
             <Card.Footer>
-                <input type="text" onChange={handleTextInput} value={textInput}></input>
-                <Button className="float-end">Add</Button>
+                <input type="text" onChange={handleTextInput} value={textInput}/>
+                <Button className="float-end" onClick={addTodoItem}>Add</Button>
             </Card.Footer>
         </Card>
     )
