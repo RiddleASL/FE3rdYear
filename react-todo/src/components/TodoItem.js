@@ -5,7 +5,7 @@ const TodoItem = (props) => {
         <ListGroup.Item>
             {(props.todo.done) ? (
                 <>
-                    <span className='done text-decoration-line-through'>{props.todo.text}</span>
+                    <span className='done'>{props.todo.text}</span>
                     <span className='float-end'>&#128077;</span>
                 </>
             ) : (
@@ -14,6 +14,7 @@ const TodoItem = (props) => {
                     <Badge pill bg="success" className="float-end" onClick={() => {props.markAsDone(props.todo.id)}}>&#10003;</Badge>
                 </>
             )}
+            <Badge pill bg="danger" className="float-end" onClick={() => {props.deleteItem(props.todo.id)}}>X</Badge>
         </ListGroup.Item>
     )
 }

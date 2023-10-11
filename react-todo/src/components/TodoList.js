@@ -26,8 +26,19 @@ const TodoList = () =>{
         setList(newList)
     }
 
+    const deleteItem = (id) => {
+        const newList = [];
+        const tempList = list.map(item => {
+            if(item.id !== id){
+                newList.push(item);
+            }
+        })
+        console.log(newList);
+        setList(newList)
+    }
+
     let todoItems = list.map((item, i) => {
-        return <TodoItem key={i} markAsDone={markAsDone} todo={item}/>
+        return <TodoItem key={i} markAsDone={markAsDone} deleteItem={deleteItem} todo={item}/>
     })
     
     const handleTextInput = e => {
