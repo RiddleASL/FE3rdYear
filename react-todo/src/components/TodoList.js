@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TodoItem from "./TodoItem";
 
 import Card from "react-bootstrap/Card"
@@ -12,8 +12,17 @@ const TodoList = () =>{
         {id: 3, text: 'Die', done: false},
     ]
 
+    let localList = JSON.parse(localStorage.getItem("todos"));
+    if(localList){
+        initList = localList;
+    }
+
     const [list, setList] = useState(initList)
     const [textInput, setTextInput] = useState("")
+
+    useEffect(() => {
+        localStorage.setItem("todos", JSON.stringify(list));
+    }, [list])
     
     const markAsDone = (id) => {
         const newList = list.map(item => {
@@ -27,11 +36,8 @@ const TodoList = () =>{
     }
 
     const deleteItem = (id) => {
-        const newList = [];
-        const tempList = list.map(item => {
-            if(item.id !== id){
-                newList.push(item);
-            }
+        const newList = list.filter(item => {
+            return item.id != id;
         })
         console.log(newList);
         setList(newList)
@@ -46,9 +52,11 @@ const TodoList = () =>{
     }
 
     const addTodoItem = e => {
+        let newID = (list.length != 0)? list[list.length-1].id + 1 : 0
+        console.log(newID);
         if(textInput != ""){
             let newTodo = {
-                id: list[list.length-1].id + 1,
+                id: newID,
                 text: textInput,
                 done: false
             }
